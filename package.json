@@ -1,0 +1,19 @@
+{
+	"name": "@shellyBits/vue-i18next",
+	"version": "0.1.0",
+	"description": "i18next integration for Vue 2.x",
+	"author": "Daniel Ritz <daniel.ritz@gmx.ch>",
+	"license": "MIT",
+	"keywords": [
+		"i18n",
+		"i18next",
+		"vue"
+	],
+	"main": "index.js",
+	"peerDependencies": {
+		"i18next": ">= 8.0.0",
+		"vue": ">= 2.2.0"
+	},
+	"devDependencies": { },
+	"dependencies": { }
+}
