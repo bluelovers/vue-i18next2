@@ -1,5 +1,5 @@
 {
-	"name": "@shellyBits/vue-i18next",
+	"name": "@shellybits/vue-i18next",
 	"version": "0.1.0",
 	"description": "i18next integration for Vue 2.x",
 	"author": "Daniel Ritz <daniel.ritz@gmx.ch>",

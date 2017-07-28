@@ -1,4 +1,4 @@
-# @shellyBits/vue-i18next
+# @shellybits/vue-i18next
 
 ## Why
 
@@ -21,7 +21,7 @@ locales.
   * Dependencies in `package.json`
 
 	```json
-	"@shellyBits/vue-i18next": "^0.1.0",
+	"@shellybits/vue-i18next": "^0.1.0",
 	"i18next": "^8.4.3",
 	"yml-loader": "^2.1.0"
 	```
@@ -50,7 +50,7 @@ locales.
 
 	```js
 	import Vue from 'vue'
-	import VueI18Next from '@shellyBits/vue-i18next'
+	import VueI18Next from '@shellybits/vue-i18next'
 
 	VueI18Next(Vue).init({
 		fallbackLng: 'en',
