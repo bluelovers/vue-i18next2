@@ -50,7 +50,7 @@ locales.
 
 	```js
 	import Vue from 'vue'
-	import VueI18Next from 'vue-i18next'
+	import VueI18Next from '@shellyBits/vue-i18next'
 
 	VueI18Next(Vue).init({
 		fallbackLng: 'en',
@@ -63,6 +63,7 @@ locales.
 				// delete if you don't have namespaces
 				if (ns != 'translation')
 					return import(`../../../config/locales/${ns}/${language}.yml`)
+
 				return import(`../../../config/locales/${language}.yml`)
 			}
 		}
@@ -70,7 +71,7 @@ locales.
 	```
 
 	VueI18Next is just a function, exported by this module. It takes Vue as its
-	single arument and returns the `i18next`, set up with a `Promise` based
+	single argument and returns the `i18next`, set up with a `Promise` based
 	backend. This backend needs a `load()` function supplied that returns a
 	`Promise`.
 
