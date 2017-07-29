@@ -2,6 +2,7 @@
 	"name": "@shellybits/vue-i18next",
 	"version": "0.1.0",
 	"description": "i18next integration for Vue 2.x",
+	"main": "index.js",
 	"author": "Daniel Ritz <daniel.ritz@gmx.ch>",
 	"license": "MIT",
 	"keywords": [
@@ -9,7 +10,12 @@
 		"i18next",
 		"vue"
 	],
-	"main": "index.js",
+	"homepage": "https://gitlab.com/shellyBits/vue-i18next",
+	"bugs": "https://gitlab.com/shellyBits/vue-i18next/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://gitlab.com/shellyBits/vue-i18next.git"
+	},
 	"peerDependencies": {
 		"i18next": ">= 8.0.0",
 		"vue": ">= 2.2.0"
