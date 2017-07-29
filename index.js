@@ -1,32 +1,30 @@
 import I18next from 'i18next'
 
-const PromiseBackend = {
-	type: "backend",
-
-	init: function (services, options, i18nextOpts) {
-		this.load = options.load
-		if (typeof this.load !== 'function')
-			throw "vue-i18next: missing 'load' function in backend options"
-	},
-
-	read: function (language, namespace, callback) {
-		if (language == 'dev') {
-			callback(null, null)
-			return
-		}
-		this.load(language, namespace).then(function (module) {
-			callback(null, module[language])
-		}).catch(function (err) {
-			callback(err, null)
-		})
-	}
-}
-
 export default function (Vue) {
-	const i18n = I18next.use(PromiseBackend)
+	var i18n = I18next.use({
+		type: "backend",
+
+		init: function (services, options, i18nextOpts) {
+			this.load = options.load
+			if (typeof this.load !== 'function')
+				throw "vue-i18next: missing 'load' function in backend options"
+		},
+
+		read: function (language, namespace, callback) {
+			if (language == 'dev') {
+				callback(null, null)
+				return
+			}
+			this.load(language, namespace).then(function (module) {
+				callback(null, module[language])
+			}).catch(function (err) {
+				callback(err, null)
+			})
+		}
+	})
 
 	Vue.use(function (Vue) {
-		const i18nVm = new Vue({ data: { tag: 1 } })
+		var i18nVm = new Vue({ data: { tag: 1 } })
 		i18n.on('languageChanged loaded', function () {
 			// trigger a reactive change
 			i18nVm.tag++

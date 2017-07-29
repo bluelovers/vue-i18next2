@@ -21,7 +21,7 @@ locales.
   * Dependencies in `package.json`
 
 	```json
-	"@shellybits/vue-i18next": "^0.1.1",
+	"@shellybits/vue-i18next": "^0.1.2",
 	"i18next": "^8.4.3",
 	"yml-loader": "^2.1.0"
 	```
