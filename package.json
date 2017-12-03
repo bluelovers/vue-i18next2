@@ -19,6 +19,8 @@
     "url": "git+https://github.com/bluelovers/vue-i18next2.git"
   },
   "peerDependencies": {
+    "@kazupon/vue-i18n-loader": "^0.2.1",
+    "vue-loader": "^13.5.0",
     "i18next": "^10.2.1",
     "vue": "^2.5.9"
   },
