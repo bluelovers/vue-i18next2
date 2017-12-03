@@ -5,6 +5,7 @@ import bind from 'bind-decorator';
 
 let _this;
 
+// @ts-ignore
 Object.defineProperty(exports, 'i18n', {
 	get()
 	{
