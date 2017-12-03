@@ -6,7 +6,7 @@
 
 ## Usage example
 
-example can work with vue-hackernews-2.0
+example can work with [vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0)
 
 ### locales
 
