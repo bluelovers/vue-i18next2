@@ -1,17 +1,8 @@
 import * as I18next from 'i18next';
 import bind from 'bind-decorator';
-
 //import deepmerge from 'deepmerge';
 
-let _this;
-
-// @ts-ignore
-Object.defineProperty(exports, 'i18n', {
-	get()
-	{
-		return _this ? _this.i18n : null;
-	},
-});
+let current;
 
 export class VueI18Next
 {
@@ -25,7 +16,7 @@ export class VueI18Next
 
 	constructor(Vue, i18next: I18next.i18n = I18next, options = {})
 	{
-		_this = this;
+		current = this;
 
 		this.Vue = Vue;
 		this.i18n = i18next;
@@ -183,9 +174,9 @@ export class VueI18Next
 
 export namespace VueI18Next
 {
-	export function create(Vue, i18next?: I18next.i18n)
+	export function create(Vue, i18next?: I18next.i18n, ...argv)
 	{
-		return new VueI18Next(Vue, i18next);
+		return new VueI18Next(Vue, i18next, ...argv);
 	}
 
 	export function backend(_i18next: I18next.i18n = I18next): I18next.i18n
@@ -218,6 +209,11 @@ export namespace VueI18Next
 				})
 			}
 		});
+	}
+
+	export function install(Vue, options)
+	{
+		auto(Vue);
 	}
 
 	export function auto(Vue, _i18next: I18next.i18n | true = I18next, useBackend?: boolean)
@@ -255,14 +251,31 @@ export namespace VueI18Next
 			namespace: `${Math.random()}`,
 		};
 	}
+
+	export function getCurrent()
+	{
+		return current;
+	}
 }
 
-export function install(Vue, options)
-{
-	VueI18Next.auto(Vue);
-}
+// @ts-ignore
+Object.defineProperty(VueI18Next, 'i18n', {
+	get()
+	{
+		return current ? current.i18n : I18next;
+	},
+});
 
+// @ts-ignore
+Object.defineProperty(exports, 'i18n', {
+	get()
+	{
+		return current ? current.i18n : I18next;
+	},
+});
+
+export const install = VueI18Next.install;
 export const create = VueI18Next.create;
 
 // @ts-ignore
-export default exports;
+export default exports as VueI18Next;
