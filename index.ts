@@ -1,4 +1,4 @@
-import I18next from 'i18next'
+import * as I18next from 'i18next'
 
 export default function (Vue) {
 	var i18n = I18next.use({
