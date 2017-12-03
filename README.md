@@ -1,120 +1,65 @@
-# @shellybits/vue-i18next
-
-## Why
-
-"Why? There are already two other packages by that name..so?"
-
-We wanted an i18next integration that fulfills these criteria:
-
-* As small as possible
-* Integrates well with Rails, i.e. make it possible to re-use i18n YML files
-* Load on demand using webpack's code splitting
-* Reactive in Vue
-
+# vue-i18next2
 
 ## Usage example
 
-For a Rails application with webpack, Vue, code splitting, dynamically loaded
-locales.
-
-
-  * Dependencies in `package.json`
-
-	```json
-	"@shellybits/vue-i18next": "^0.1.2",
-	"i18next": "^8.4.3",
-	"yml-loader": "^2.1.0"
-	```
-
-	This package has only peer dependencies von Vue and i18next, so you have to
-	include those yourself.
-
-  * In `webpack.conf.js`:
-
-	```js
-	...
-	module: {
-		rules: [
-			{
-				test: /\.ya?ml$/,
-				loader: 'yml-loader'
-			},
-
-			...
-		]
-	}
-	...
-	```
-
-  * In the entry or commons file
-
-	```js
-	import Vue from 'vue'
-	import VueI18Next from '@shellybits/vue-i18next'
-
-	VueI18Next(Vue).init({
-		fallbackLng: 'en',
-		interpolation: {
-			prefix: "${",
-			suffix: "}"
+```javascript
+const locales = {
+	en: {
+		message: {
+			hello: 'Hello!! - EN',
 		},
-		backend: {
-			load(language, ns) {
-				// delete if you don't have namespaces
-				if (ns != 'translation')
-					return import(`../../../config/locales/${ns}/${language}.yml`)
+		tos: 'Term of Service',
+		term: 'I accept {{1}} {{0}}.',
+		loadbundle: 'Load Bundle {{lang}}',
+	},
+	de: {
+		message: {
+			hello: 'Hallo!! - DE',
+		},
+		tos: 'Nutzungsbedingungen',
+		term: 'Ich akzeptiere {{0}}. {{1}}',
+		loadbundle: 'Bundle Laden {{lang}}',
+	},
+};
+```
 
-				return import(`../../../config/locales/${language}.yml`)
-			}
-		}
-	})
-	```
+```javascript
 
-	VueI18Next is just a function, exported by this module. It takes Vue as its
-	single argument and returns the `i18next`, set up with a `Promise` based
-	backend. This backend needs a `load()` function supplied that returns a
-	`Promise`.
+const i18next = require("i18next");
+const VueParams = require('vue-params');
+const VueI18Next = require('vue-i18next2');
 
-	When using the webpack `import` function, the limitations described in the
-	webpack documentation apply. Namely it's a string, not an expression. During
-	compile time, the above example is basically interpreted as a glob pattern
-	`../../../config/locales/*.yml`. For this reason, it's not (easily) possible
-	to use a configuration option pointing at the files.
+Vue.use(VueParams);
+Vue.use(VueI18Next);
 
-	An alternative to use webpack code splitting and the `yml-loader` is to load
-	JSON files by other means like, e.g. using Axios.
+Vue.params.i18nextLanguage = "en";
 
-  * Translation in Vue components
+i18next.init({
+	lng: Vue.params.i18nextLanguage,
+	fallbackLng: 'en',
+	resources: {
+		en: { translation: locales.en },
+		de: { translation: locales.de },
+	},
+});
 
-	In any Vue template, the function `i18next.t` is available as `$t`, and it's
-	reactive when the language is changed:
+```
 
-	```vue
-	<p>{{ $t('rails.key') }}</p>
-	```
+```javascript
+const VueParams = require('vue-params');
+const VueI18Next = require('vue-i18next2');
 
-	This kinda implies that in Vue JS code, it's accessible as `this.$t`.
+Vue.use(VueParams);
+Vue.use(VueI18Next);
 
-  * Loading an additional namespace
+Vue.params.i18nextLanguage = "en";
 
-	Namespaces can be dynamically loaded. Whenever a translation from a
-	namespace is needed:
-
-	```js
-	...
-	beforeMount() {
-		this.$i18n.loadNamespaces('name')
-	}
-	...
-	```
-
-	When executed, the backend will automatically fetch the translation (if
-	required) by triggering the supplied `load()` function.
-
-	This also shows that the `i18next` instance is available in each Vue
-	instance as `$i18n`.
-
-
-## License
-
-This project is released under the [MIT license](LICENSE).
+VueI18Next.i18n.init({
+	lng: Vue.params.i18nextLanguage,
+	fallbackLng: 'en',
+	resources: {
+		en: { translation: locales.en },
+		de: { translation: locales.de },
+	},
+});
+```
