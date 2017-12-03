@@ -47,6 +47,7 @@ Vue.params.i18nextLanguage = "en";
 i18next.init({
 	lng: Vue.params.i18nextLanguage,
 	fallbackLng: 'en',
+	fallbackNS: ['translation'],
 	resources: {
 		en: { translation: locales.en },
 		de: { translation: locales.de },
@@ -67,6 +68,7 @@ Vue.params.i18nextLanguage = "en";
 VueI18Next.i18n.init({
 	lng: Vue.params.i18nextLanguage,
 	fallbackLng: 'en',
+	fallbackNS: ['translation'],
 	resources: {
 		en: { translation: locales.en },
 		de: { translation: locales.de },
@@ -80,6 +82,41 @@ VueI18Next.i18n.init({
 {{ $t('tos') }}
 {{ $t('tos', { lng: "de" }) }}
 {{ $t('tos', { lng: "en" }) }}
+```
+
+vueConfig
+```json
+{
+	test: /\.vue$/,
+	loader: 'vue-loader',
+	options: {
+		loaders: {
+			i18n: '@kazupon/vue-i18n-loader',
+		},
+	},
+}
+```
+
+```vue
+<i18n>
+  {
+  "en": {
+  "hello": "hello world!"
+  },
+  "ja": {
+  "hello": "こんにちは、世界!"
+  }
+  }
+</i18n>
+
+<template>
+{{ $t('tos') }}
+{{ $t('tos', { lng: "de" }) }}
+{{ $t('tos', { lng: "en" }) }}
+
+{{ $t('hello') }}
+{{ $t('hello', { lng: "ja" }) }}
+</template>
 ```
 
 ## others

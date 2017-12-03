@@ -1,6 +1,7 @@
 import * as I18next from 'i18next';
 import bind from 'bind-decorator';
-//import deepmerge from 'deepmerge';
+import * as deepmerge from 'deepmerge';
+import * as shortid from 'shortid';
 
 let current;
 
@@ -65,6 +66,11 @@ export class VueI18Next
 		let self = this;
 		let opts = Object.assign({}, self.options, options);
 
+		if (self.Vue.params && !self.Vue.params.i18nextLanguage)
+		{
+			self.Vue.paramsCreate('i18nextLanguage');
+		}
+
 		self.resetVM();
 
 		if (opts.bindI18n)
@@ -124,48 +130,75 @@ export class VueI18Next
 
 			beforeCreate()
 			{
-				const options = this.$options;
+				let _this = this;
+				const options = _this.$options;
 
-				/*
 				try
 				{
 					if (options.i18n)
 					{
-						this.$i18n = options.i18n;
+						_this.$i18n = options.i18n;
 					}
 					else if (options.parent && options.parent.$i18n)
 					{
-						this.$i18n = options.parent.$i18n;
+						_this.$i18n = options.parent.$i18n;
 					}
 				}
 				catch (e)
 				{}
-				*/
 
-				/*
 				let inlineTranslations = {};
-				if (this.$i18n) {
-					const getNamespace = this.$i18n.options.getComponentNamespace || getComponentNamespace;
-					const { namespace, loadNamespace } = getNamespace(this);
+				if (_this.$i18n) {
+					const getNamespace = _this.$i18n.options.getComponentNamespace || VueI18Next.getComponentNamespace;
+					const { namespace, loadNamespace } = getNamespace(_this);
 
 					if (options.__i18n) {
 						options.__i18n.forEach((resource) => {
 							inlineTranslations = deepmerge(inlineTranslations, JSON.parse(resource));
 						});
+
+						//console.log(namespace, inlineTranslations, options);
+					}
+
+					if (loadNamespace && _this.$i18n.options.loadComponentNamespace) {
+						_this.$i18n.loadNamespaces([namespace]);
 					}
 
 					const languages = Object.keys(inlineTranslations);
 					languages.forEach((lang) => {
-						this.$i18n.i18next.addResourceBundle(
+
+						//console.log(lang, namespace, { ...inlineTranslations[lang] });
+
+						_this.$i18n.addResourceBundle(
 							lang,
 							namespace,
-							{ ...inlineTranslations[lang] },
+							{
+								...inlineTranslations[lang],
+							},
 							true,
 							false,
 						);
 					});
+
+					let ns = [namespace];
+
+					if (_this.$i18n.options.defaultNS)
+					{
+						if (Array.isArray(_this.$i18n.options.defaultNS))
+						{
+							ns = ns.concat(_this.$i18n.options.defaultNS);
+						}
+						else
+						{
+							ns.push(_this.$i18n.options.defaultNS);
+						}
+
+						//console.log(ns);
+					}
+
+					options.i18nextNamespace = ns;
+					//console.log(_this.$i18n.options);
 				}
-				*/
 			},
 		});
 	}
@@ -173,7 +206,7 @@ export class VueI18Next
 	@bind
 	init(...opts)
 	{
-		this.i18n.init(...opts);
+		this.i18n = this.i18n.init(...opts);
 
 		return this;
 	}
@@ -260,7 +293,7 @@ export namespace VueI18Next
 		}
 
 		return {
-			namespace: `${Math.random()}`,
+			namespace: shortid.generate(),
 		};
 	}
 
