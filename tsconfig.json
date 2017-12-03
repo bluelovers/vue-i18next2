@@ -22,7 +22,7 @@
     "locale": "zh-TW",
     "pretty": true,
 
-    "removeComments": false,
+    "removeComments": true,
 
     "baseUrl": ".",
     "sourceRoot": ".",
