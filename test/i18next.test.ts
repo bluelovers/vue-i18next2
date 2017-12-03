@@ -9,6 +9,8 @@ import * as VueParams from 'vue-params';
 import VueI18Next from '..';
 import { locales } from './res/locales';
 
+const fallbackLng = 'en';
+
 describe(relative(__filename), () =>
 {
 	let i18n;
@@ -26,7 +28,7 @@ describe(relative(__filename), () =>
 
 			o.init({
 				//lng: 'en',
-				fallbackLng: 'en',
+				fallbackLng: fallbackLng,
 				resources: {
 					en: { translation: locales.en },
 					de: { translation: locales.de },
@@ -37,7 +39,11 @@ describe(relative(__filename), () =>
 			expect(i18n).to.equal(o.i18n);
 			expect(i18n).to.equal(VueI18Next.i18n);
 
-			expect(o.t('tos')).to.equal(i18n.t('tos'));
+			expect(o.t('tos', {
+				lng: fallbackLng,
+			})).to.equal(locales[fallbackLng].tos);
+
+			expect(o.t('tos')).to.equal(locales[fallbackLng].tos);
 
 			done();
 		});
