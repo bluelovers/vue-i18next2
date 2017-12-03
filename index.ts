@@ -43,7 +43,7 @@ export class VueI18Next
 	}
 
 	@bind
-	t(key, options)
+	t(key, options?: I18next.TranslationOptions)
 	{
 		return this.i18n.t(key, options);
 	}
@@ -100,9 +100,9 @@ export class VueI18Next
 		*/
 		self.Vue.mixin({
 			computed: {
-				$t()
+				$t(): I18next.TranslationFunction
 				{
-					return function (key, options)
+					return function (key, options?: I18next.TranslationOptions)
 					{
 						let opts = self.Vue.util.extend({
 							lng: self.Vue.params ? self.Vue.params.i18nextLanguage : void(0),
@@ -169,6 +169,11 @@ export class VueI18Next
 		this.i18n.init(...opts);
 
 		return this;
+	}
+
+	static get i18n()
+	{
+		return current ? current.i18n : I18next;
 	}
 }
 
@@ -259,12 +264,7 @@ export namespace VueI18Next
 }
 
 // @ts-ignore
-Object.defineProperty(VueI18Next, 'i18n', {
-	get()
-	{
-		return current ? current.i18n : I18next;
-	},
-});
+VueI18Next.VueI18Next = VueI18Next;
 
 // @ts-ignore
 Object.defineProperty(exports, 'i18n', {
@@ -278,4 +278,4 @@ export const install = VueI18Next.install;
 export const create = VueI18Next.create;
 
 // @ts-ignore
-export default exports as VueI18Next;
+export default exports;
