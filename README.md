@@ -1,6 +1,14 @@
 # vue-i18next2
 
+> i18next integration for Vue
+
+`npm install vue-i18next2`
+
 ## Usage example
+
+example can work with vue-hackernews-2.0
+
+### locales
 
 ```javascript
 const locales = {
@@ -22,6 +30,8 @@ const locales = {
 	},
 };
 ```
+
+### code
 
 ```javascript
 
@@ -63,3 +73,17 @@ VueI18Next.i18n.init({
 	},
 });
 ```
+
+### vue
+
+```vue
+{{ $t('tos') }}
+{{ $t('tos', { lng: "de" }) }}
+{{ $t('tos', { lng: "en" }) }}
+```
+
+## others
+
+* [@shellybits/vue-i18next](https://www.npmjs.com/package/@shellybits/vue-i18next)
+* [vue-i18next](https://github.com/rse/vue-i18next)
+* [@panter/vue-i18next](https://github.com/panter/vue-i18next)
