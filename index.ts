@@ -42,16 +42,21 @@ export class VueI18Next
 		return this.i18nVm;
 	}
 
-	@bind
-	t(key, options?: I18next.TranslationOptions)
+	reactiveVM($_vm)
 	{
-		return this.i18n.t(key, options);
+		$_vm.tag;
 	}
 
 	@bind
 	onI18nChanged()
 	{
 		this.i18nVm.tag++;
+	}
+
+	@bind
+	t(key, options?: I18next.TranslationOptions)
+	{
+		return this.i18n.t(key, options);
 	}
 
 	@bind
@@ -110,7 +115,8 @@ export class VueI18Next
 						}, options);
 
 						// this makes the function reactive
-						this.$i18n.$_vm.tag;
+						//this.$i18n.$_vm.tag;
+						self.reactiveVM(this.$i18n.$_vm);
 						return this.$i18n.t(key, opts);
 					}
 				},
@@ -164,6 +170,7 @@ export class VueI18Next
 		});
 	}
 
+	@bind
 	init(...opts)
 	{
 		this.i18n.init(...opts);
