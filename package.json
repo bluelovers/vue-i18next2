@@ -1,6 +1,6 @@
 {
   "name": "vue-i18next2",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "i18next integration for Vue",
   "main": "index.js",
   "author": "Daniel Ritz <daniel.ritz@gmx.ch>",
@@ -11,10 +11,12 @@
     "vue"
   ],
   "homepage": "https://github.com/bluelovers/vue-i18next2",
-  "bugs": "https://github.com/bluelovers/vue-i18next2/issues",
+  "bugs": {
+    "url": "https://github.com/bluelovers/vue-i18next2/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bluelovers/vue-i18next2.git"
+    "url": "git+https://github.com/bluelovers/vue-i18next2.git"
   },
   "peerDependencies": {
     "i18next": "^10.2.1",
@@ -26,5 +28,11 @@
   "dependencies": {
     "bind-decorator": "^1.0.11",
     "deepmerge": "^2.0.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npx mocha '!(node_modules)/**/*.+(test|spec).js'"
   }
 }
