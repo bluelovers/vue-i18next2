@@ -1,6 +1,6 @@
 {
   "name": "vue-i18next2",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "i18next integration for Vue",
   "main": "index.js",
   "author": "Daniel Ritz <daniel.ritz@gmx.ch>",
@@ -25,11 +25,13 @@
     "vue": "^2.5.9"
   },
   "devDependencies": {
-    "@types/i18next": "^8.4.2"
+    "@types/i18next": "^8.4.2",
+    "vue": "^2.5.9"
   },
   "dependencies": {
     "bind-decorator": "^1.0.11",
     "deepmerge": "^2.0.1",
+    "i18next": "^10.2.1",
     "shortid": "^2.2.8"
   },
   "directories": {
