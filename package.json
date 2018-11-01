@@ -1,13 +1,16 @@
 {
   "name": "vue-i18next2",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "i18next integration for Vue",
-  "main": "index.js",
-  "author": "Daniel Ritz <daniel.ritz@gmx.ch>",
-  "license": "MIT",
   "keywords": [
+    "gettext",
+    "globalization",
     "i18n",
     "i18next",
+    "internationalization",
+    "l10n",
+    "localization",
+    "translation",
     "vue"
   ],
   "homepage": "https://github.com/bluelovers/vue-i18next2",
@@ -18,26 +21,33 @@
     "type": "git",
     "url": "git+https://github.com/bluelovers/vue-i18next2.git"
   },
-  "peerDependencies": {
-    "@kazupon/vue-i18n-loader": "^0.2.1",
-    "vue-loader": "^13.5.0",
-    "i18next": "^10.2.1",
-    "vue": "^2.5.9"
-  },
-  "devDependencies": {
-    "@types/i18next": "^8.4.2",
-    "vue": "^2.5.9"
-  },
-  "dependencies": {
-    "bind-decorator": "^1.0.11",
-    "deepmerge": "^2.0.1",
-    "i18next": "^10.2.1",
-    "shortid": "^2.2.8"
-  },
+  "license": "MIT",
+  "author": "Daniel Ritz <daniel.ritz@gmx.ch>",
+  "main": "index.js",
   "directories": {
+    "lib": "lib",
     "test": "test"
   },
   "scripts": {
     "test": "npx mocha '!(node_modules)/**/*.+(test|spec).js'"
+  },
+  "dependencies": {
+    "bind-decorator": "^1.0.11",
+    "deepmerge": "^2.2.1",
+    "i18next": "^12",
+    "shortid": "^2.2.13"
+  },
+  "devDependencies": {
+    "@types/node": "^10",
+    "@types/vue": "^2",
+    "@types/i18next": "^11",
+    "@types/typescript": "^2",
+    "vue": "^2"
+  },
+  "peerDependencies": {
+    "@kazupon/vue-i18n-loader": "^0",
+    "i18next": "^12",
+    "vue": "^2",
+    "vue-loader": "^13"
   }
 }

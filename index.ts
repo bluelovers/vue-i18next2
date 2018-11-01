@@ -1,21 +1,29 @@
-import * as I18next from 'i18next';
+import I18next = require('i18next');
 import bind from 'bind-decorator';
-import * as deepmerge from 'deepmerge';
-import * as shortid from 'shortid';
+import deepmerge = require('deepmerge');
+import shortid = require('shortid');
+import VUE from 'vue';
 
-let current;
+let current: VueI18Next;
+
+export interface IVueI18NextOptions
+{
+	bindI18n: string;
+	bindStore: string;
+	[k: string]: any
+}
 
 export class VueI18Next
 {
-	public Vue;
+	public Vue: typeof VUE;
 	public i18n: I18next.i18n;
-	public i18nVm = null;
-	public options = {
+	public i18nVm: VUE = null;
+	public options: IVueI18NextOptions = {
 		bindI18n: 'languageChanged loaded',
 		bindStore: 'added removed',
 	};
 
-	constructor(Vue, i18next: I18next.i18n = I18next, options = {})
+	constructor(Vue: typeof VUE, i18next: I18next.i18n = I18next, options = {})
 	{
 		current = this;
 
@@ -51,6 +59,7 @@ export class VueI18Next
 	@bind
 	onI18nChanged()
 	{
+		// @ts-ignore
 		this.i18nVm.tag++;
 	}
 
@@ -61,13 +70,15 @@ export class VueI18Next
 	}
 
 	@bind
-	install(Vue, options)
+	install(Vue: typeof VUE, options)
 	{
 		let self = this;
 		let opts = Object.assign({}, self.options, options);
 
+		// @ts-ignore
 		if (self.Vue.params && !self.Vue.params.i18nextLanguage)
 		{
+			// @ts-ignore
 			self.Vue.paramsCreate('i18nextLanguage');
 		}
 
@@ -115,7 +126,9 @@ export class VueI18Next
 				{
 					return function (key, options?: I18next.TranslationOptions)
 					{
+						// @ts-ignore
 						let opts = self.Vue.util.extend({
+							// @ts-ignore
 							lng: self.Vue.params ? self.Vue.params.i18nextLanguage : void(0),
 							ns: this.$options.i18nextNamespace,
 						}, options);
@@ -135,12 +148,16 @@ export class VueI18Next
 
 				try
 				{
+					// @ts-ignore
 					if (options.i18n)
 					{
+						// @ts-ignore
 						_this.$i18n = options.i18n;
 					}
+					// @ts-ignore
 					else if (options.parent && options.parent.$i18n)
 					{
+						// @ts-ignore
 						_this.$i18n = options.parent.$i18n;
 					}
 				}
@@ -148,27 +165,39 @@ export class VueI18Next
 				{}
 
 				let inlineTranslations = {};
-				if (_this.$i18n) {
+				// @ts-ignore
+				if (_this.$i18n)
+				{
+					// @ts-ignore
 					const getNamespace = _this.$i18n.options.getComponentNamespace || VueI18Next.getComponentNamespace;
 					const { namespace, loadNamespace } = getNamespace(_this);
 
-					if (options.__i18n) {
-						options.__i18n.forEach((resource) => {
+					// @ts-ignore
+					if (options.__i18n)
+					{
+						// @ts-ignore
+						options.__i18n.forEach((resource) =>
+						{
 							inlineTranslations = deepmerge(inlineTranslations, JSON.parse(resource));
 						});
 
 						//console.log(namespace, inlineTranslations, options);
 					}
 
-					if (loadNamespace && _this.$i18n.options.loadComponentNamespace) {
+					// @ts-ignore
+					if (loadNamespace && _this.$i18n.options.loadComponentNamespace)
+					{
+						// @ts-ignore
 						_this.$i18n.loadNamespaces([namespace]);
 					}
 
 					const languages = Object.keys(inlineTranslations);
-					languages.forEach((lang) => {
+					languages.forEach((lang) =>
+					{
 
 						//console.log(lang, namespace, { ...inlineTranslations[lang] });
 
+						// @ts-ignore
 						_this.$i18n.addResourceBundle(
 							lang,
 							namespace,
@@ -182,20 +211,25 @@ export class VueI18Next
 
 					let ns = [namespace];
 
+					// @ts-ignore
 					if (_this.$i18n.options.defaultNS)
 					{
+						// @ts-ignore
 						if (Array.isArray(_this.$i18n.options.defaultNS))
 						{
+							// @ts-ignore
 							ns = ns.concat(_this.$i18n.options.defaultNS);
 						}
 						else
 						{
+							// @ts-ignore
 							ns.push(_this.$i18n.options.defaultNS);
 						}
 
 						//console.log(ns);
 					}
 
+					// @ts-ignore
 					options.i18nextNamespace = ns;
 					//console.log(_this.$i18n.options);
 				}
@@ -219,7 +253,7 @@ export class VueI18Next
 
 export namespace VueI18Next
 {
-	export function create(Vue, i18next?: I18next.i18n, ...argv)
+	export function create(Vue: typeof VUE, i18next?: I18next.i18n, ...argv)
 	{
 		return new VueI18Next(Vue, i18next, ...argv);
 	}
@@ -252,16 +286,16 @@ export namespace VueI18Next
 				{
 					callback(err, null);
 				})
-			}
+			},
 		});
 	}
 
-	export function install(Vue, options)
+	export function install(Vue: typeof VUE, options?)
 	{
 		auto(Vue);
 	}
 
-	export function auto(Vue, _i18next: I18next.i18n | true = I18next, useBackend?: boolean)
+	export function auto(Vue: typeof VUE, _i18next: I18next.i18n | true = I18next, useBackend?: boolean)
 	{
 		if (_i18next === true)
 		{
@@ -281,8 +315,9 @@ export namespace VueI18Next
 		return o;
 	}
 
-	export function getComponentNamespace(vm)
+	export function getComponentNamespace(vm: VUE)
 	{
+		// @ts-ignore
 		const namespace = vm.$options.name || vm.$options._componentTag;
 		if (namespace)
 		{
@@ -317,5 +352,6 @@ Object.defineProperty(exports, 'i18n', {
 export const install = VueI18Next.install;
 export const create = VueI18Next.create;
 
-// @ts-ignore
-export default exports;
+import * as self from './index'
+
+export default self;
